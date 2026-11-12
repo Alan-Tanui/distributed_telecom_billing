@@ -7,7 +7,7 @@ if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
 from common.communication import send_json
-from common.config import NODE_HOST, NODE2_PORT, REQUEST_TIMEOUT, BILLING_API_PORT
+from common.config import NODE_HOST, NODE2_PORT, REQUEST_TIMEOUT, BILLING_API_PORT, BIND_HOST
 from monitoring.metrics_logger import MetricsLogger
 
 logger = MetricsLogger()
@@ -31,10 +31,12 @@ class Handler(BaseHTTPRequestHandler):
         return json.loads(raw.decode("utf-8"))
 
     def do_POST(self):
-        if self.path.rstrip("/") == "/bill":
+        if self.path.rstrip("/") in ("/bill", "/bill/transaction"):
             try:
                 req = self._read_json()
                 t0 = time.perf_counter()
+                if self.path.rstrip("/") == "/bill/transaction":
+                    req["type"] = "TX_BILL"
                 response = send_json(NODE_HOST, NODE2_PORT, req,
                                      timeout=REQUEST_TIMEOUT)
                 latency_ms = (time.perf_counter() - t0) * 1000
@@ -71,8 +73,8 @@ class BillingHTTPServer(ThreadingHTTPServer):
 
 
 def main():
-    server = BillingHTTPServer((NODE_HOST, BILLING_API_PORT), Handler)
-    print(f"[billing-api] http://{NODE_HOST}:{BILLING_API_PORT}")
+    server = BillingHTTPServer((BIND_HOST, BILLING_API_PORT), Handler)
+    print(f"[billing-api] http://{BIND_HOST}:{BILLING_API_PORT}; billing node={NODE_HOST}:{NODE2_PORT}")
     try:
         server.serve_forever()
     except KeyboardInterrupt:

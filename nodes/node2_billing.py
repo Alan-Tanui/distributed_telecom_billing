@@ -3,12 +3,15 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
+from common.config import BIND_HOST, NODE2_PORT, ACTIVE_RATING_NODES
 from processing.dispatcher import Dispatcher
+from transactions.two_phase_commit import TwoPhaseCommitCoordinator
 
-HOST = "127.0.0.1"
-PORT = 5002
+HOST = BIND_HOST
+PORT = NODE2_PORT
 
 dispatcher = Dispatcher()
+tx_coordinator = TwoPhaseCommitCoordinator()
 
 
 def handle(connection):
@@ -24,7 +27,19 @@ def handle(connection):
             return
         request = json.loads(buffer.split(b"\n", 1)[0].decode())
         start = time.perf_counter()
-        response = dispatcher.process_request(request)
+        if request.get("type") == "TX_BILL":
+            tx_request = {k: request[k] for k in ("request_id", "transaction_id", "customer_id", "service", "usage") if k in request}
+            response = tx_coordinator.execute(
+                tx_request,
+                rating_node=request.get("rating_node"),
+                inject_failure=request.get("inject_failure", False),
+            )
+        elif request.get("type") == "TX_RECOVER":
+            response = tx_coordinator.recover_pending()
+        elif request.get("type") == "TX_STATUS":
+            response = tx_coordinator.status(request["transaction_id"])
+        else:
+            response = dispatcher.process_request(request)
         total_time = time.perf_counter() - start
         response["billing_node"] = "NODE-2"
         response["billing_processing_time"] = total_time
