@@ -1,0 +1,4 @@
+experiment,result,operations,mean_duration_ms,max_duration_ms
+deadlock_detection,COMPLETED_AFTER_RECOVERY,1,9.647,9.647
+ordered_lock_prevention,COMPLETED,100,12.776,175.323
+deadlock_detection,ABORTED_DEADLOCK,1,7.584,7.584

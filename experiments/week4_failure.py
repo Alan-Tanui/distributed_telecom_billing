@@ -47,7 +47,10 @@ def main():
     time.sleep(8)
     print("\n[4] After re-election:")
     ping_all()
-    print("\nExpected: NODE-5 is the new leader.")
+    print("\nHow to read this result:")
+    print("  launcher.py --no-supervise : NODE-6 stays down, so NODE-5 (highest surviving id) must be the new leader.")
+    print("  launcher.py (supervised)   : NODE-6 is restarted within about 1 s, before the followers' 5 s heartbeat")
+    print("                               timeout, and as the highest id it correctly resumes as leader (Week 7 recovery).")
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-import threading, time
+import os, threading, time
 from common.communication import send_json
 
 
@@ -38,6 +38,16 @@ class BullyElection(threading.Thread):
         if self.my_id > from_id:
             threading.Thread(target=self._start_election, daemon=True).start()
 
+    def _leader_alive(self):
+        addr = self.leader_addr
+        if not addr:
+            return False
+        try:
+            reply = send_json(addr[0], addr[1], {"type": "PROBE", "from_id": self.my_id}, timeout=0.6)
+            return bool(reply) and not reply.get("error")
+        except Exception:
+            return False
+
     def receive_coordinator(self, leader_id, leader_addr):
         # Bully's invariant is "the highest surviving id wins". Because
         # elections can run concurrently (see receive_election above),
@@ -45,7 +55,11 @@ class BullyElection(threading.Thread):
         # downgrade to a lower id than one we've already accepted stops a
         # stale/incorrect announcement from a lower-id node overriding
         # the correct, higher-id leader if messages cross on the wire.
-        if self.leader_id is not None and leader_id < self.leader_id:
+        # ... but only while that known leader is actually alive. If it has crashed, the
+        # announcement from the highest SURVIVING node (a lower id) must be accepted, otherwise
+        # the followers keep a dead leader until they detect the failure themselves.
+        if (self.leader_id is not None and leader_id < self.leader_id
+                and (self.leader_id == self.my_id or self._leader_alive())):
             return
         self.leader_id = leader_id
         self.leader_addr = leader_addr
@@ -69,8 +83,14 @@ class BullyElection(threading.Thread):
                     self.leader_addr = None
                     self._start_election()
 
+    def _log(self, message):
+        """Opt-in trace for the Week 4 defence and for debugging: ELECTION_DEBUG=1 python launcher.py"""
+        if os.getenv("ELECTION_DEBUG") == "1":
+            print(f"[election {time.strftime('%H:%M:%S')}] {self.node_id}: {message}", flush=True)
+
     def _start_election(self):
         self.elections_started += 1
+        self._log(f"starting election #{self.elections_started} (higher peers: {[p for p, _ in self.higher_peers]})")
         answered = False
         for peer_id, peer_addr in self.higher_peers:
             try:
@@ -83,10 +103,13 @@ class BullyElection(threading.Thread):
             except Exception:
                 continue
         if not answered:
+            self._log("no higher node answered: declaring myself leader and announcing to everyone")
             self.leader_id = self.my_id
             self.leader_addr = self.my_addr
             self.on_leader_change(self.my_id, self.my_addr)
             self._broadcast_coordinator()
+        else:
+            self._log("a higher node answered: waiting for its COORDINATOR announcement")
 
     def _broadcast_coordinator(self):
         for peer_id, peer_addr in self.all_peers:
@@ -96,8 +119,10 @@ class BullyElection(threading.Thread):
                     "leader_id": self.my_id,
                     "leader_addr": self.my_addr,
                 }, timeout=1.0)
-            except Exception:
-                pass
+            except Exception as exc:
+                self._log(f"announcement to node {peer_id} failed: {exc}")
+                continue
+            self._log(f"announced leader {self.my_id} to node {peer_id}")
 
     def stop(self):
         self.running = False

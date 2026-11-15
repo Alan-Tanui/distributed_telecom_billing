@@ -30,3 +30,29 @@ HEARTBEAT_TIMEOUT = float(os.getenv("HEARTBEAT_TIMEOUT", "5.0"))
 LEDGER_HOST = os.getenv("LEDGER_HOST", "127.0.0.1")
 LEDGER_PORT = int(os.getenv("LEDGER_PORT", "5007"))
 TX_COORDINATOR_ENABLED = True
+
+# ---------------------------------------------------------------------------
+# Week 7 — fault tolerance (failure detection, failover, ledger replication)
+# ---------------------------------------------------------------------------
+LEDGER_REPLICA_HOST = os.getenv("LEDGER_REPLICA_HOST", "127.0.0.1")
+LEDGER_REPLICA_PORT = int(os.getenv("LEDGER_REPLICA_PORT", "5008"))
+LEDGER_REPLICATION_ENABLED = os.getenv("LEDGER_REPLICATION_ENABLED", "1") == "1"
+LEDGER_REPLICAS = [("LEDGER-1", (LEDGER_HOST, LEDGER_PORT))]
+if LEDGER_REPLICATION_ENABLED:
+    LEDGER_REPLICAS.append(("LEDGER-2", (LEDGER_REPLICA_HOST, LEDGER_REPLICA_PORT)))
+
+# "resilient" = failure detector + failover + replicated ledger (proposed system)
+# "baseline" = original Week 3-6 behaviour (no detector, no failover, one ledger)
+FT_DEFAULT_MODE = os.getenv("FT_DEFAULT_MODE", "resilient")
+FT_PROBE_INTERVAL = float(os.getenv("FT_PROBE_INTERVAL", "0.5"))
+FT_PROBE_TIMEOUT = float(os.getenv("FT_PROBE_TIMEOUT", "0.5"))
+FT_MISS_THRESHOLD = int(os.getenv("FT_MISS_THRESHOLD", "3"))
+FT_ATTEMPT_TIMEOUT = float(os.getenv("FT_ATTEMPT_TIMEOUT", "1.5"))
+FT_MAX_ATTEMPTS = int(os.getenv("FT_MAX_ATTEMPTS", "3"))
+FT_POLICY = os.getenv("FT_POLICY", "round_robin")  # round_robin | least_loaded
+
+# ---------------------------------------------------------------------------
+# Week 8 — emulated node capacity so system-model comparisons are reproducible
+# ---------------------------------------------------------------------------
+NODE_SERVICE_SLOTS = int(os.getenv("NODE_SERVICE_SLOTS", "1"))
+

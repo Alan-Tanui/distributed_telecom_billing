@@ -1,0 +1,1086 @@
+{
+  "environment": {
+    "platform": "Windows-11-10.0.26300-SP0",
+    "python": "3.14.10",
+    "cpu_count": 4,
+    "in_docker": false,
+    "date": "2026-11-15 13:09:57",
+    "args": {
+      "scenarios": "all",
+      "pre": 5.0,
+      "fault": 8.0,
+      "post": 8.0,
+      "clients": 8,
+      "think": 0.02,
+      "bucket": 0.5,
+      "client_timeout": 15.0,
+      "seed": 42,
+      "repeats": 1,
+      "quick": false
+    }
+  },
+  "summaries": [
+    {
+      "scenario": "rating_crash",
+      "repeat": 1,
+      "label": "Node failure (rating node crashes)",
+      "mode": "baseline",
+      "target": "NODE-4",
+      "fault": "crash",
+      "clients": 8,
+      "duration_s": 21.04,
+      "requests": 4316,
+      "availability_pct": 92.86,
+      "availability_during_fault_pct": 87.5,
+      "request_success_pct": 99.49,
+      "wrong_result_pct": 0.0,
+      "fault_phase_success_pct": 97.974,
+      "fault_phase_wrong_pct": 0.0,
+      "pre_mean_latency_ms": 11.594,
+      "fault_mean_latency_ms": 31.419,
+      "fault_p95_latency_ms": 34.926,
+      "masked": false,
+      "mttr_s": 1.487,
+      "outage_s": 1.5,
+      "detection_s": 0.228,
+      "down_declared_s": null,
+      "detector_recovered_s": 4.773,
+      "node_down_observed_s": 0.284,
+      "node_recovery_s": 1.329,
+      "failovers": 0,
+      "consistent_after_recovery": null,
+      "post_run_convergence_s": null,
+      "pending_after_auto_recovery": null,
+      "auto_recovery_s": null
+    },
+    {
+      "scenario": "rating_crash",
+      "repeat": 1,
+      "label": "Node failure (rating node crashes)",
+      "mode": "resilient",
+      "target": "NODE-4",
+      "fault": "crash",
+      "clients": 8,
+      "duration_s": 21.07,
+      "requests": 4907,
+      "availability_pct": 100.0,
+      "availability_during_fault_pct": 100.0,
+      "request_success_pct": 100.0,
+      "wrong_result_pct": 0.0,
+      "fault_phase_success_pct": 100.0,
+      "fault_phase_wrong_pct": 0.0,
+      "pre_mean_latency_ms": 12.44,
+      "fault_mean_latency_ms": 15.216,
+      "fault_p95_latency_ms": 33.924,
+      "masked": true,
+      "mttr_s": 0.0,
+      "outage_s": 0.0,
+      "detection_s": 0.22,
+      "down_declared_s": null,
+      "detector_recovered_s": 5.064,
+      "node_down_observed_s": 0.208,
+      "node_recovery_s": 1.976,
+      "failovers": 1,
+      "consistent_after_recovery": null,
+      "post_run_convergence_s": null,
+      "pending_after_auto_recovery": null,
+      "auto_recovery_s": null
+    },
+    {
+      "scenario": "rating_omission",
+      "repeat": 1,
+      "label": "Omission failure (node accepts, never answers)",
+      "mode": "baseline",
+      "target": "NODE-4",
+      "fault": "omission",
+      "clients": 8,
+      "duration_s": 21.08,
+      "requests": 2951,
+      "availability_pct": 61.9,
+      "availability_during_fault_pct": 0,
+      "request_success_pct": 99.729,
+      "wrong_result_pct": 0.0,
+      "fault_phase_success_pct": 73.333,
+      "fault_phase_wrong_pct": 0.0,
+      "pre_mean_latency_ms": 15.473,
+      "fault_mean_latency_ms": 12.178,
+      "fault_p95_latency_ms": 19.369,
+      "masked": false,
+      "mttr_s": 8.469,
+      "outage_s": 8.0,
+      "detection_s": 0.872,
+      "down_declared_s": 1.886,
+      "detector_recovered_s": 8.484,
+      "node_down_observed_s": 0.057,
+      "node_recovery_s": 8.232,
+      "failovers": 0,
+      "consistent_after_recovery": null,
+      "post_run_convergence_s": null,
+      "pending_after_auto_recovery": null,
+      "auto_recovery_s": null
+    },
+    {
+      "scenario": "rating_omission",
+      "repeat": 1,
+      "label": "Omission failure (node accepts, never answers)",
+      "mode": "resilient",
+      "target": "NODE-4",
+      "fault": "omission",
+      "clients": 8,
+      "duration_s": 21.08,
+      "requests": 4337,
+      "availability_pct": 95.24,
+      "availability_during_fault_pct": 87.5,
+      "request_success_pct": 100.0,
+      "wrong_result_pct": 0.0,
+      "fault_phase_success_pct": 100.0,
+      "fault_phase_wrong_pct": 0.0,
+      "pre_mean_latency_ms": 15.27,
+      "fault_mean_latency_ms": 20.281,
+      "fault_p95_latency_ms": 21.494,
+      "masked": false,
+      "mttr_s": 1.465,
+      "outage_s": 1.0,
+      "detection_s": 0.809,
+      "down_declared_s": 1.861,
+      "detector_recovered_s": 8.475,
+      "node_down_observed_s": 0.05,
+      "node_recovery_s": 8.2,
+      "failovers": 8,
+      "consistent_after_recovery": null,
+      "post_run_convergence_s": null,
+      "pending_after_auto_recovery": null,
+      "auto_recovery_s": null
+    },
+    {
+      "scenario": "rating_drop",
+      "repeat": 1,
+      "label": "Communication failure (connections dropped)",
+      "mode": "baseline",
+      "target": "NODE-4",
+      "fault": "drop",
+      "clients": 8,
+      "duration_s": 21.12,
+      "requests": 4715,
+      "availability_pct": 61.9,
+      "availability_during_fault_pct": 6.25,
+      "request_success_pct": 89.862,
+      "wrong_result_pct": 0.0,
+      "fault_phase_success_pct": 75.013,
+      "fault_phase_wrong_pct": 0.0,
+      "pre_mean_latency_ms": 18.572,
+      "fault_mean_latency_ms": 13.135,
+      "fault_p95_latency_ms": 27.161,
+      "masked": false,
+      "mttr_s": 7.971,
+      "outage_s": 8.0,
+      "detection_s": 0.337,
+      "down_declared_s": 1.343,
+      "detector_recovered_s": 8.343,
+      "node_down_observed_s": 0.106,
+      "node_recovery_s": 8.033,
+      "failovers": 0,
+      "consistent_after_recovery": null,
+      "post_run_convergence_s": null,
+      "pending_after_auto_recovery": null,
+      "auto_recovery_s": null
+    },
+    {
+      "scenario": "rating_drop",
+      "repeat": 1,
+      "label": "Communication failure (connections dropped)",
+      "mode": "resilient",
+      "target": "NODE-4",
+      "fault": "drop",
+      "clients": 8,
+      "duration_s": 21.1,
+      "requests": 4763,
+      "availability_pct": 100.0,
+      "availability_during_fault_pct": 100.0,
+      "request_success_pct": 100.0,
+      "wrong_result_pct": 0.0,
+      "fault_phase_success_pct": 100.0,
+      "fault_phase_wrong_pct": 0.0,
+      "pre_mean_latency_ms": 15.382,
+      "fault_mean_latency_ms": 14.736,
+      "fault_p95_latency_ms": 30.67,
+      "masked": true,
+      "mttr_s": 0.0,
+      "outage_s": 0.0,
+      "detection_s": 0.012,
+      "down_declared_s": 1.122,
+      "detector_recovered_s": 8.127,
+      "node_down_observed_s": 0.097,
+      "node_recovery_s": 8.027,
+      "failovers": 1,
+      "consistent_after_recovery": null,
+      "post_run_convergence_s": null,
+      "pending_after_auto_recovery": null,
+      "auto_recovery_s": null
+    },
+    {
+      "scenario": "rating_error",
+      "repeat": 1,
+      "label": "Service failure (node answers with errors)",
+      "mode": "baseline",
+      "target": "NODE-4",
+      "fault": "error",
+      "clients": 8,
+      "duration_s": 21.08,
+      "requests": 4621,
+      "availability_pct": 61.9,
+      "availability_during_fault_pct": 6.25,
+      "request_success_pct": 90.565,
+      "wrong_result_pct": 0.0,
+      "fault_phase_success_pct": 75.043,
+      "fault_phase_wrong_pct": 0.0,
+      "pre_mean_latency_ms": 15.295,
+      "fault_mean_latency_ms": 16.022,
+      "fault_p95_latency_ms": 33.037,
+      "masked": false,
+      "mttr_s": 7.966,
+      "outage_s": 8.0,
+      "detection_s": 0.389,
+      "down_declared_s": 1.387,
+      "detector_recovered_s": 8.404,
+      "node_down_observed_s": 0.089,
+      "node_recovery_s": 8.05,
+      "failovers": 0,
+      "consistent_after_recovery": null,
+      "post_run_convergence_s": null,
+      "pending_after_auto_recovery": null,
+      "auto_recovery_s": null
+    },
+    {
+      "scenario": "rating_error",
+      "repeat": 1,
+      "label": "Service failure (node answers with errors)",
+      "mode": "resilient",
+      "target": "NODE-4",
+      "fault": "error",
+      "clients": 8,
+      "duration_s": 21.11,
+      "requests": 4493,
+      "availability_pct": 100.0,
+      "availability_during_fault_pct": 100.0,
+      "request_success_pct": 99.978,
+      "wrong_result_pct": 0.0,
+      "fault_phase_success_pct": 100.0,
+      "fault_phase_wrong_pct": 0.0,
+      "pre_mean_latency_ms": 15.7,
+      "fault_mean_latency_ms": 15.708,
+      "fault_p95_latency_ms": 33.992,
+      "masked": true,
+      "mttr_s": 0.0,
+      "outage_s": 0.0,
+      "detection_s": 0.01,
+      "down_declared_s": 1.189,
+      "detector_recovered_s": 8.198,
+      "node_down_observed_s": 0.074,
+      "node_recovery_s": 8.054,
+      "failovers": 1,
+      "consistent_after_recovery": null,
+      "post_run_convergence_s": null,
+      "pending_after_auto_recovery": null,
+      "auto_recovery_s": null
+    },
+    {
+      "scenario": "rating_byzantine",
+      "repeat": 1,
+      "label": "Byzantine failure (wrong charges, no error)",
+      "mode": "baseline",
+      "target": "NODE-4",
+      "fault": "byzantine",
+      "clients": 8,
+      "duration_s": 21.14,
+      "requests": 4261,
+      "availability_pct": 61.9,
+      "availability_during_fault_pct": 6.25,
+      "request_success_pct": 90.261,
+      "wrong_result_pct": 9.693,
+      "fault_phase_success_pct": 74.954,
+      "fault_phase_wrong_pct": 24.985,
+      "pre_mean_latency_ms": 21.515,
+      "fault_mean_latency_ms": 17.841,
+      "fault_p95_latency_ms": 33.776,
+      "masked": false,
+      "mttr_s": 7.959,
+      "outage_s": 8.0,
+      "detection_s": null,
+      "down_declared_s": null,
+      "detector_recovered_s": null,
+      "node_down_observed_s": null,
+      "node_recovery_s": null,
+      "failovers": 0,
+      "consistent_after_recovery": null,
+      "post_run_convergence_s": null,
+      "pending_after_auto_recovery": null,
+      "auto_recovery_s": null
+    },
+    {
+      "scenario": "rating_byzantine",
+      "repeat": 1,
+      "label": "Byzantine failure (wrong charges, no error)",
+      "mode": "resilient",
+      "target": "NODE-4",
+      "fault": "byzantine",
+      "clients": 8,
+      "duration_s": 21.2,
+      "requests": 4626,
+      "availability_pct": 59.52,
+      "availability_during_fault_pct": 0,
+      "request_success_pct": 90.424,
+      "wrong_result_pct": 9.511,
+      "fault_phase_success_pct": 74.957,
+      "fault_phase_wrong_pct": 24.986,
+      "pre_mean_latency_ms": 19.937,
+      "fault_mean_latency_ms": 15.739,
+      "fault_p95_latency_ms": 30.281,
+      "masked": false,
+      "mttr_s": 8.364,
+      "outage_s": 8.5,
+      "detection_s": null,
+      "down_declared_s": null,
+      "detector_recovered_s": null,
+      "node_down_observed_s": null,
+      "node_recovery_s": null,
+      "failovers": 0,
+      "consistent_after_recovery": null,
+      "post_run_convergence_s": null,
+      "pending_after_auto_recovery": null,
+      "auto_recovery_s": null
+    },
+    {
+      "scenario": "rating_byzantine",
+      "repeat": 1,
+      "label": "Byzantine failure (wrong charges, no error)",
+      "mode": "resilient_verify",
+      "target": "NODE-4",
+      "fault": "byzantine",
+      "clients": 8,
+      "duration_s": 21.09,
+      "requests": 2868,
+      "availability_pct": 100.0,
+      "availability_during_fault_pct": 100.0,
+      "request_success_pct": 99.965,
+      "wrong_result_pct": 0.0,
+      "fault_phase_success_pct": 100.0,
+      "fault_phase_wrong_pct": 0.0,
+      "pre_mean_latency_ms": 35.924,
+      "fault_mean_latency_ms": 40.097,
+      "fault_p95_latency_ms": 73.289,
+      "masked": true,
+      "mttr_s": 0.0,
+      "outage_s": 0.0,
+      "detection_s": 0.029,
+      "down_declared_s": null,
+      "detector_recovered_s": 0.512,
+      "node_down_observed_s": null,
+      "node_recovery_s": null,
+      "failovers": 0,
+      "consistent_after_recovery": null,
+      "post_run_convergence_s": null,
+      "pending_after_auto_recovery": null,
+      "auto_recovery_s": null
+    },
+    {
+      "scenario": "tx_rating_crash",
+      "repeat": 1,
+      "label": "Rating node crash during 2PC load (failover under a new transaction id)",
+      "mode": "baseline",
+      "target": "NODE-3",
+      "fault": "crash",
+      "clients": 8,
+      "duration_s": 22.56,
+      "requests": 140,
+      "availability_pct": 78.57,
+      "availability_during_fault_pct": 56.25,
+      "request_success_pct": 83.571,
+      "wrong_result_pct": 0.0,
+      "fault_phase_success_pct": 63.462,
+      "fault_phase_wrong_pct": 0.0,
+      "pre_mean_latency_ms": 1178.611,
+      "fault_mean_latency_ms": 1227.471,
+      "fault_p95_latency_ms": 4505.989,
+      "masked": false,
+      "mttr_s": 2.462,
+      "outage_s": 4.0,
+      "detection_s": 0.599,
+      "down_declared_s": 5.578,
+      "detector_recovered_s": 5.612,
+      "node_down_observed_s": 0.281,
+      "node_recovery_s": 2.489,
+      "failovers": 0,
+      "consistent_after_recovery": true,
+      "post_run_convergence_s": 0.152,
+      "pending_after_auto_recovery": 0,
+      "auto_recovery_s": 0.018
+    },
+    {
+      "scenario": "tx_rating_crash",
+      "repeat": 1,
+      "label": "Rating node crash during 2PC load (failover under a new transaction id)",
+      "mode": "resilient",
+      "target": "NODE-3",
+      "fault": "crash",
+      "clients": 8,
+      "duration_s": 21.6,
+      "requests": 170,
+      "availability_pct": 95.24,
+      "availability_during_fault_pct": 100.0,
+      "request_success_pct": 98.235,
+      "wrong_result_pct": 0.0,
+      "fault_phase_success_pct": 100.0,
+      "fault_phase_wrong_pct": 0.0,
+      "pre_mean_latency_ms": 1232.351,
+      "fault_mean_latency_ms": 883.837,
+      "fault_p95_latency_ms": 1452.723,
+      "masked": false,
+      "mttr_s": 0.471,
+      "outage_s": 0.5,
+      "detection_s": 0.248,
+      "down_declared_s": null,
+      "detector_recovered_s": 5.233,
+      "node_down_observed_s": 0.248,
+      "node_recovery_s": 2.581,
+      "failovers": 3,
+      "consistent_after_recovery": true,
+      "post_run_convergence_s": 0.143,
+      "pending_after_auto_recovery": 0,
+      "auto_recovery_s": 0.013
+    },
+    {
+      "scenario": "ledger_crash",
+      "repeat": 1,
+      "label": "Ledger primary crash during 2PC load",
+      "mode": "baseline",
+      "target": "LEDGER-1",
+      "fault": "crash",
+      "clients": 8,
+      "duration_s": 21.85,
+      "requests": 160,
+      "availability_pct": 78.57,
+      "availability_during_fault_pct": 56.25,
+      "request_success_pct": 90.0,
+      "wrong_result_pct": 0.0,
+      "fault_phase_success_pct": 78.723,
+      "fault_phase_wrong_pct": 0.0,
+      "pre_mean_latency_ms": 958.367,
+      "fault_mean_latency_ms": 816.472,
+      "fault_p95_latency_ms": 2037.294,
+      "masked": false,
+      "mttr_s": 2.462,
+      "outage_s": 4.0,
+      "detection_s": 0.58,
+      "down_declared_s": null,
+      "detector_recovered_s": 5.11,
+      "node_down_observed_s": 0.285,
+      "node_recovery_s": 2.085,
+      "failovers": 0,
+      "consistent_after_recovery": true,
+      "post_run_convergence_s": 0.29,
+      "pending_after_auto_recovery": 0,
+      "auto_recovery_s": 0.031
+    },
+    {
+      "scenario": "ledger_crash",
+      "repeat": 1,
+      "label": "Ledger primary crash during 2PC load",
+      "mode": "resilient",
+      "target": "LEDGER-1",
+      "fault": "crash",
+      "clients": 8,
+      "duration_s": 21.67,
+      "requests": 168,
+      "availability_pct": 95.24,
+      "availability_during_fault_pct": 87.5,
+      "request_success_pct": 100.0,
+      "wrong_result_pct": 0.0,
+      "fault_phase_success_pct": 100.0,
+      "fault_phase_wrong_pct": 0.0,
+      "pre_mean_latency_ms": 790.023,
+      "fault_mean_latency_ms": 1253.468,
+      "fault_p95_latency_ms": 4757.398,
+      "masked": false,
+      "mttr_s": 1.973,
+      "outage_s": 1.0,
+      "detection_s": 0.524,
+      "down_declared_s": 1.488,
+      "detector_recovered_s": 1.992,
+      "node_down_observed_s": 0.276,
+      "node_recovery_s": 1.994,
+      "failovers": 0,
+      "consistent_after_recovery": true,
+      "post_run_convergence_s": 0.273,
+      "pending_after_auto_recovery": 0,
+      "auto_recovery_s": 0.026
+    },
+    {
+      "scenario": "coordinator_crash",
+      "repeat": 1,
+      "label": "2PC coordinator (NODE-2) crash",
+      "mode": "resilient",
+      "target": "NODE-2",
+      "fault": "crash",
+      "clients": 8,
+      "duration_s": 21.77,
+      "requests": 447,
+      "availability_pct": 85.71,
+      "availability_during_fault_pct": 75.0,
+      "request_success_pct": 34.676,
+      "wrong_result_pct": 0.0,
+      "fault_phase_success_pct": 15.588,
+      "fault_phase_wrong_pct": 0.0,
+      "pre_mean_latency_ms": 1023.715,
+      "fault_mean_latency_ms": 1004.381,
+      "fault_p95_latency_ms": 1386.069,
+      "masked": false,
+      "mttr_s": 2.446,
+      "outage_s": 2.5,
+      "detection_s": null,
+      "down_declared_s": null,
+      "detector_recovered_s": null,
+      "node_down_observed_s": 0.278,
+      "node_recovery_s": 2.036,
+      "failovers": 0,
+      "consistent_after_recovery": true,
+      "post_run_convergence_s": 0.283,
+      "pending_after_auto_recovery": 0,
+      "auto_recovery_s": 0.038
+    }
+  ],
+  "details": {
+    "rating_crash/baseline/r1": {
+      "injected": {
+        "ok": true,
+        "node": "NODE-4",
+        "mode": "crash",
+        "injected_at": 1794737017.7679882
+      },
+      "inject_epoch": 1794737017.763463,
+      "clear_epoch": 1794737025.7708943,
+      "consistency": null,
+      "recovery": null,
+      "ft_config": {
+        "request_timeout_s": 8.0,
+        "attempt_timeout_s": 1.5,
+        "max_attempts": 3,
+        "policy": "round_robin",
+        "probe_interval_s": 0.5,
+        "miss_threshold": 3,
+        "ledger_replicas": [
+          "LEDGER-1",
+          "LEDGER-2"
+        ]
+      }
+    },
+    "rating_crash/resilient/r1": {
+      "injected": {
+        "ok": true,
+        "node": "NODE-4",
+        "mode": "crash",
+        "injected_at": 1794737039.961907
+      },
+      "inject_epoch": 1794737039.954844,
+      "clear_epoch": 1794737047.9650073,
+      "consistency": null,
+      "recovery": null,
+      "ft_config": {
+        "request_timeout_s": 8.0,
+        "attempt_timeout_s": 1.5,
+        "max_attempts": 3,
+        "policy": "round_robin",
+        "probe_interval_s": 0.5,
+        "miss_threshold": 3,
+        "ledger_replicas": [
+          "LEDGER-1",
+          "LEDGER-2"
+        ]
+      }
+    },
+    "rating_omission/baseline/r1": {
+      "injected": {
+        "ok": true,
+        "node": "NODE-4",
+        "mode": "omission",
+        "injected_at": 1794737062.1803362
+      },
+      "inject_epoch": 1794737062.1716332,
+      "clear_epoch": 1794737070.1816883,
+      "consistency": null,
+      "recovery": null,
+      "ft_config": {
+        "request_timeout_s": 8.0,
+        "attempt_timeout_s": 1.5,
+        "max_attempts": 3,
+        "policy": "round_robin",
+        "probe_interval_s": 0.5,
+        "miss_threshold": 3,
+        "ledger_replicas": [
+          "LEDGER-1",
+          "LEDGER-2"
+        ]
+      }
+    },
+    "rating_omission/resilient/r1": {
+      "injected": {
+        "ok": true,
+        "node": "NODE-4",
+        "mode": "omission",
+        "injected_at": 1794737084.3917646
+      },
+      "inject_epoch": 1794737084.3837743,
+      "clear_epoch": 1794737092.3934138,
+      "consistency": null,
+      "recovery": null,
+      "ft_config": {
+        "request_timeout_s": 8.0,
+        "attempt_timeout_s": 1.5,
+        "max_attempts": 3,
+        "policy": "round_robin",
+        "probe_interval_s": 0.5,
+        "miss_threshold": 3,
+        "ledger_replicas": [
+          "LEDGER-1",
+          "LEDGER-2"
+        ]
+      }
+    },
+    "rating_drop/baseline/r1": {
+      "injected": {
+        "ok": true,
+        "node": "NODE-4",
+        "mode": "drop",
+        "injected_at": 1794737106.5877266
+      },
+      "inject_epoch": 1794737106.5824232,
+      "clear_epoch": 1794737114.5899765,
+      "consistency": null,
+      "recovery": null,
+      "ft_config": {
+        "request_timeout_s": 8.0,
+        "attempt_timeout_s": 1.5,
+        "max_attempts": 3,
+        "policy": "round_robin",
+        "probe_interval_s": 0.5,
+        "miss_threshold": 3,
+        "ledger_replicas": [
+          "LEDGER-1",
+          "LEDGER-2"
+        ]
+      }
+    },
+    "rating_drop/resilient/r1": {
+      "injected": {
+        "ok": true,
+        "node": "NODE-4",
+        "mode": "drop",
+        "injected_at": 1794737128.8283706
+      },
+      "inject_epoch": 1794737128.8235054,
+      "clear_epoch": 1794737136.8299136,
+      "consistency": null,
+      "recovery": null,
+      "ft_config": {
+        "request_timeout_s": 8.0,
+        "attempt_timeout_s": 1.5,
+        "max_attempts": 3,
+        "policy": "round_robin",
+        "probe_interval_s": 0.5,
+        "miss_threshold": 3,
+        "ledger_replicas": [
+          "LEDGER-1",
+          "LEDGER-2"
+        ]
+      }
+    },
+    "rating_error/baseline/r1": {
+      "injected": {
+        "ok": true,
+        "node": "NODE-4",
+        "mode": "error",
+        "injected_at": 1794737151.093435
+      },
+      "inject_epoch": 1794737151.0856938,
+      "clear_epoch": 1794737159.0958571,
+      "consistency": null,
+      "recovery": null,
+      "ft_config": {
+        "request_timeout_s": 8.0,
+        "attempt_timeout_s": 1.5,
+        "max_attempts": 3,
+        "policy": "round_robin",
+        "probe_interval_s": 0.5,
+        "miss_threshold": 3,
+        "ledger_replicas": [
+          "LEDGER-1",
+          "LEDGER-2"
+        ]
+      }
+    },
+    "rating_error/resilient/r1": {
+      "injected": {
+        "ok": true,
+        "node": "NODE-4",
+        "mode": "error",
+        "injected_at": 1794737173.316663
+      },
+      "inject_epoch": 1794737173.3103542,
+      "clear_epoch": 1794737181.3185132,
+      "consistency": null,
+      "recovery": null,
+      "ft_config": {
+        "request_timeout_s": 8.0,
+        "attempt_timeout_s": 1.5,
+        "max_attempts": 3,
+        "policy": "round_robin",
+        "probe_interval_s": 0.5,
+        "miss_threshold": 3,
+        "ledger_replicas": [
+          "LEDGER-1",
+          "LEDGER-2"
+        ]
+      }
+    },
+    "rating_byzantine/baseline/r1": {
+      "injected": {
+        "ok": true,
+        "node": "NODE-4",
+        "mode": "byzantine",
+        "injected_at": 1794737195.5451941
+      },
+      "inject_epoch": 1794737195.501165,
+      "clear_epoch": 1794737203.5464606,
+      "consistency": null,
+      "recovery": null,
+      "ft_config": {
+        "request_timeout_s": 8.0,
+        "attempt_timeout_s": 1.5,
+        "max_attempts": 3,
+        "policy": "round_robin",
+        "probe_interval_s": 0.5,
+        "miss_threshold": 3,
+        "ledger_replicas": [
+          "LEDGER-1",
+          "LEDGER-2"
+        ]
+      }
+    },
+    "rating_byzantine/resilient/r1": {
+      "injected": {
+        "ok": true,
+        "node": "NODE-4",
+        "mode": "byzantine",
+        "injected_at": 1794737217.8805773
+      },
+      "inject_epoch": 1794737217.8719084,
+      "clear_epoch": 1794737225.8818493,
+      "consistency": null,
+      "recovery": null,
+      "ft_config": {
+        "request_timeout_s": 8.0,
+        "attempt_timeout_s": 1.5,
+        "max_attempts": 3,
+        "policy": "round_robin",
+        "probe_interval_s": 0.5,
+        "miss_threshold": 3,
+        "ledger_replicas": [
+          "LEDGER-1",
+          "LEDGER-2"
+        ]
+      }
+    },
+    "rating_byzantine/resilient_verify/r1": {
+      "injected": {
+        "ok": true,
+        "node": "NODE-4",
+        "mode": "byzantine",
+        "injected_at": 1794737240.1187034
+      },
+      "inject_epoch": 1794737240.1118915,
+      "clear_epoch": 1794737248.1212795,
+      "consistency": null,
+      "recovery": null,
+      "ft_config": {
+        "request_timeout_s": 8.0,
+        "attempt_timeout_s": 1.5,
+        "max_attempts": 3,
+        "policy": "round_robin",
+        "probe_interval_s": 0.5,
+        "miss_threshold": 3,
+        "ledger_replicas": [
+          "LEDGER-1",
+          "LEDGER-2"
+        ]
+      }
+    },
+    "tx_rating_crash/baseline/r1": {
+      "injected": {
+        "ok": true,
+        "node": "NODE-3",
+        "mode": "crash",
+        "injected_at": 1794737262.5714593
+      },
+      "inject_epoch": 1794737262.5604985,
+      "clear_epoch": 1794737270.5765,
+      "consistency": {
+        "journal_committed": 10243,
+        "replicas": {
+          "LEDGER-1": {
+            "reachable": true,
+            "committed": 10243,
+            "missing_committed": 0,
+            "orphan_prepared": 0
+          },
+          "LEDGER-2": {
+            "reachable": true,
+            "committed": 10175,
+            "missing_committed": 68,
+            "orphan_prepared": 0
+          }
+        },
+        "consistent": true,
+        "billing_node": "NODE-2",
+        "billing_processing_time": 0.1364453000001049,
+        "billing_pid": 1
+      },
+      "recovery": {
+        "failed_request_outcomes": {
+          "COMMIT": 3,
+          "ABORT": 20
+        },
+        "replay_attempted": 23,
+        "replay_committed": 3,
+        "recovery_events": [
+          "re-drove 19 pending transaction(s)"
+        ]
+      },
+      "ft_config": {
+        "request_timeout_s": 8.0,
+        "attempt_timeout_s": 1.5,
+        "max_attempts": 3,
+        "policy": "round_robin",
+        "probe_interval_s": 0.5,
+        "miss_threshold": 3,
+        "ledger_replicas": [
+          "LEDGER-1",
+          "LEDGER-2"
+        ]
+      }
+    },
+    "tx_rating_crash/resilient/r1": {
+      "injected": {
+        "ok": true,
+        "node": "NODE-3",
+        "mode": "crash",
+        "injected_at": 1794737290.9654567
+      },
+      "inject_epoch": 1794737290.9595392,
+      "clear_epoch": 1794737298.9683902,
+      "consistency": {
+        "journal_committed": 10413,
+        "replicas": {
+          "LEDGER-1": {
+            "reachable": true,
+            "committed": 10413,
+            "missing_committed": 0,
+            "orphan_prepared": 0
+          },
+          "LEDGER-2": {
+            "reachable": true,
+            "committed": 10413,
+            "missing_committed": 0,
+            "orphan_prepared": 0
+          }
+        },
+        "consistent": true,
+        "billing_node": "NODE-2",
+        "billing_processing_time": 0.12992059400016842,
+        "billing_pid": 1
+      },
+      "recovery": {
+        "failed_request_outcomes": {
+          "COMMIT": 3
+        },
+        "replay_attempted": 3,
+        "replay_committed": 3,
+        "recovery_events": [
+          "re-drove 6 pending transaction(s)"
+        ]
+      },
+      "ft_config": {
+        "request_timeout_s": 8.0,
+        "attempt_timeout_s": 1.5,
+        "max_attempts": 3,
+        "policy": "round_robin",
+        "probe_interval_s": 0.5,
+        "miss_threshold": 3,
+        "ledger_replicas": [
+          "LEDGER-1",
+          "LEDGER-2"
+        ]
+      }
+    },
+    "ledger_crash/baseline/r1": {
+      "injected": {
+        "ok": true,
+        "node": "LEDGER-1",
+        "mode": "crash",
+        "injected_at": 1794737314.1583445
+      },
+      "inject_epoch": 1794737314.1494625,
+      "clear_epoch": 1794737322.1654208,
+      "consistency": {
+        "journal_committed": 10559,
+        "replicas": {
+          "LEDGER-1": {
+            "reachable": true,
+            "committed": 10559,
+            "missing_committed": 0,
+            "orphan_prepared": 0
+          },
+          "LEDGER-2": {
+            "reachable": true,
+            "committed": 10471,
+            "missing_committed": 88,
+            "orphan_prepared": 0
+          }
+        },
+        "consistent": true,
+        "billing_node": "NODE-2",
+        "billing_processing_time": 0.2643277880001733,
+        "billing_pid": 1
+      },
+      "recovery": {
+        "failed_request_outcomes": {
+          "COMMIT": 2,
+          "ABORT": 14
+        },
+        "replay_attempted": 16,
+        "replay_committed": 2,
+        "recovery_events": [
+          "re-drove 10 pending transaction(s)",
+          "{\"skipped\": \"resync already running\"}"
+        ]
+      },
+      "ft_config": {
+        "request_timeout_s": 8.0,
+        "attempt_timeout_s": 1.5,
+        "max_attempts": 3,
+        "policy": "round_robin",
+        "probe_interval_s": 0.5,
+        "miss_threshold": 3,
+        "ledger_replicas": [
+          "LEDGER-1",
+          "LEDGER-2"
+        ]
+      }
+    },
+    "ledger_crash/resilient/r1": {
+      "injected": {
+        "ok": true,
+        "node": "LEDGER-1",
+        "mode": "crash",
+        "injected_at": 1794737342.2916121
+      },
+      "inject_epoch": 1794737342.2839785,
+      "clear_epoch": 1794737350.2942517,
+      "consistency": {
+        "journal_committed": 10727,
+        "replicas": {
+          "LEDGER-1": {
+            "reachable": true,
+            "committed": 10727,
+            "missing_committed": 0,
+            "orphan_prepared": 0
+          },
+          "LEDGER-2": {
+            "reachable": true,
+            "committed": 10727,
+            "missing_committed": 0,
+            "orphan_prepared": 0
+          }
+        },
+        "consistent": true,
+        "billing_node": "NODE-2",
+        "billing_processing_time": 0.24898299000005863,
+        "billing_pid": 1
+      },
+      "recovery": {
+        "failed_request_outcomes": {},
+        "replay_attempted": 0,
+        "replay_committed": 0,
+        "recovery_events": [
+          "{\"healed\": 8, \"orphans_cleaned\": 0, \"unrecoverable\": 0, \"resync_ms\": 992.206, \"replicas_reachable\": [\"LEDGER-1\", \"LEDGER-2\"]}"
+        ]
+      },
+      "ft_config": {
+        "request_timeout_s": 8.0,
+        "attempt_timeout_s": 1.5,
+        "max_attempts": 3,
+        "policy": "round_robin",
+        "probe_interval_s": 0.5,
+        "miss_threshold": 3,
+        "ledger_replicas": [
+          "LEDGER-1",
+          "LEDGER-2"
+        ]
+      }
+    },
+    "coordinator_crash/resilient/r1": {
+      "injected": {
+        "ok": true,
+        "node": "NODE-2",
+        "mode": "crash",
+        "injected_at": 1794737365.794257
+      },
+      "inject_epoch": 1794737365.7790082,
+      "clear_epoch": 1794737373.7963228,
+      "consistency": {
+        "journal_committed": 10884,
+        "replicas": {
+          "LEDGER-1": {
+            "reachable": true,
+            "committed": 10884,
+            "missing_committed": 0,
+            "orphan_prepared": 0
+          },
+          "LEDGER-2": {
+            "reachable": true,
+            "committed": 10884,
+            "missing_committed": 0,
+            "orphan_prepared": 0
+          }
+        },
+        "consistent": true,
+        "billing_node": "NODE-2",
+        "billing_processing_time": 0.2574636950000695,
+        "billing_pid": 1
+      },
+      "recovery": {
+        "failed_request_outcomes": {
+          "COMMIT": 2,
+          "ABORT": 5,
+          "UNKNOWN": 285
+        },
+        "replay_attempted": 50,
+        "replay_committed": 45,
+        "recovery_events": [
+          "recovered=6 resync={\"healed\": 0, \"orphans_cleaned\": 0, \"unrecoverable\": 0, \"resync_ms\": 259.372, \"replicas_reachable\": [\"LEDGER-1\", \"LEDGER-2\"]}"
+        ]
+      },
+      "ft_config": {
+        "request_timeout_s": 8.0,
+        "attempt_timeout_s": 1.5,
+        "max_attempts": 3,
+        "policy": "round_robin",
+        "probe_interval_s": 0.5,
+        "miss_threshold": 3,
+        "ledger_replicas": [
+          "LEDGER-1",
+          "LEDGER-2"
+        ]
+      }
+    }
+  }
+}

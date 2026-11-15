@@ -10,6 +10,8 @@ from coordination.bully_election import BullyElection
 from coordination.coordinator import Coordinator
 from transactions.rating_participant import RatingTransactionParticipant
 from common.config import BIND_HOST, ADVERTISE_HOST, RATING_NODES
+from common.fault_state import FaultState
+from common.emulated_work import ServiceCapacity
 
 HOST, PORT = BIND_HOST, 5003
 NODE_ID    = "NODE-3"
@@ -18,15 +20,19 @@ MY_ID      = 3
 engine  = RatingEngine()
 tx_participant = RatingTransactionParticipant(engine, os.getenv("RATING_DB_PATH", "data/node3_rating_transactions.db"))
 clock   = LamportClock(NODE_ID)
+faults  = FaultState(NODE_ID)       # Week 7 fault injection
+capacity = ServiceCapacity()        # Week 8 emulated service slots
 elector = None
 coord   = None
 
 
 def process_request(request):
     start  = time.perf_counter()
+    queue_wait_ms = capacity.execute(request.get("work_ms", 0), request.get("work_mode", "sleep"))
     charge = engine.calculate_charge(request["service"], request["usage"])
     processing_time = time.perf_counter() - start
     return {
+        "queue_wait_ms": round(queue_wait_ms, 3),
         "request_id": request["request_id"],
         "customer_id": request["customer_id"],
         "charge": charge,
@@ -48,9 +54,24 @@ def handle(connection):
         if not buffer:
             return
         request = json.loads(buffer.split(b"\n", 1)[0].decode())
+        if faults.is_control(request):
+            connection.sendall((json.dumps(faults.control(request)) + "\n").encode())
+            return
+        action = faults.intercept(request)
+        if action:
+            if action[0] == "drop":
+                return                      # communication failure: close, no reply
+            if action[0] == "omit":
+                time.sleep(action[1])       # omission failure: accept, never answer
+                return
+            if action[0] == "error":        # service failure
+                connection.sendall((json.dumps({"error": action[1], "node": NODE_ID}) + "\n").encode())
+                return
         clock.update(request.get("lamport", 0))
 
-        if request.get("type") == "TX_PREPARE":
+        if request.get("type") == "NODE_STATS":
+            response = capacity.snapshot(reset=bool(request.get("reset")))
+        elif request.get("type") == "TX_PREPARE":
             response = tx_participant.prepare(request)
         elif request.get("type") == "TX_COMMIT":
             response = tx_participant.commit(request["transaction_id"])
@@ -83,6 +104,7 @@ def handle(connection):
 
         response["lamport"] = clock.tick()
         response["origin"] = NODE_ID
+        response = faults.corrupt(response)  # Byzantine mode only
         connection.sendall((json.dumps(response) + "\n").encode())
     except Exception as error:
         try:

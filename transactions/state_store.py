@@ -75,6 +75,12 @@ class TransactionStateStore:
             return {"state": "UNKNOWN", "transaction_id": txid}
         return {"state": row[0], "payload": json.loads(row[1]), "transaction_id": txid}
 
+    def list_ids(self):
+        with self._connect() as db:
+            rows = db.execute("SELECT transaction_id,state FROM transactions").fetchall()
+        return {"committed": [t for t, st in rows if st == "COMMITTED"],
+                "prepared": [t for t, st in rows if st == "PREPARED"]}
+
     def stats(self):
         with self._connect() as db:
             rows = db.execute("SELECT state,COUNT(*) FROM transactions GROUP BY state").fetchall()
