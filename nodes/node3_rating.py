@@ -12,6 +12,7 @@ from transactions.rating_participant import RatingTransactionParticipant
 from common.config import BIND_HOST, ADVERTISE_HOST, RATING_NODES
 from common.fault_state import FaultState
 from common.emulated_work import ServiceCapacity
+from nodes.node_extensions import NodeExtensions
 
 HOST, PORT = BIND_HOST, 5003
 NODE_ID    = "NODE-3"
@@ -22,6 +23,7 @@ tx_participant = RatingTransactionParticipant(engine, os.getenv("RATING_DB_PATH"
 clock   = LamportClock(NODE_ID)
 faults  = FaultState(NODE_ID)       # Week 7 fault injection
 capacity = ServiceCapacity()        # Week 8 emulated service slots
+extensions = NodeExtensions(NODE_ID, capacity)   # Weeks 9-10: accounts, ownership, processes
 elector = None
 coord   = None
 
@@ -67,6 +69,11 @@ def handle(connection):
             if action[0] == "error":        # service failure
                 connection.sendall((json.dumps({"error": action[1], "node": NODE_ID}) + "\n").encode())
                 return
+        ext = extensions.handle(request)     # Weeks 9-10 messages
+        if ext is not None:
+            ext["node"] = NODE_ID
+            connection.sendall((json.dumps(ext) + "\n").encode())
+            return
         clock.update(request.get("lamport", 0))
 
         if request.get("type") == "NODE_STATS":

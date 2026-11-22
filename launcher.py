@@ -23,6 +23,10 @@ PROCESS_MAP = {
     "NODE-6": ("nodes/node6_rating.py", {}),
     "BILLING-API": ("api/billing_api.py", {}),
     "LEDGER-1": ("transactions/ledger_node.py", {}),
+    "NS-CENTRAL": ("naming/name_server.py", {"NS_NAME": "NS-CENTRAL"}),
+    "NS-ROOT": ("naming/name_server.py", {"NS_NAME": "NS-ROOT"}),
+    "NS-ACCT": ("naming/name_server.py", {"NS_NAME": "NS-ACCT"}),
+    "NS-SVC": ("naming/name_server.py", {"NS_NAME": "NS-SVC"}),
     "LEDGER-2": ("transactions/ledger_node.py",
                  {"LEDGER_PORT": "5008", "LEDGER_NODE_ID": "LEDGER-2",
                   "LEDGER_DB_PATH": "data/ledger_replica_transactions.db"}),
@@ -64,9 +68,13 @@ def main():
 
     procs = {}
     print("=" * 60)
-    print("DISTRIBUTED TELECOM BILLING - ASSIGNMENT 3 / WEEKS 5 TO 8")
+    print("DISTRIBUTED TELECOM BILLING - ASSIGNMENT 3 / WEEKS 5 TO 10")
     print("=" * 60)
 
+    print("\n[0/4] Name servers (central, root, acct zone, svc zone)")
+    for ns in ("NS-CENTRAL", "NS-ROOT", "NS-ACCT", "NS-SVC"):
+        procs[ns] = start(ns)
+    time.sleep(0.5)
     print("\n[1/4] Distributed ledger (primary" + (" + replica)" if LEDGER_REPLICATION_ENABLED else ")"))
     procs["LEDGER-1"] = start("LEDGER-1")
     if LEDGER_REPLICATION_ENABLED:
@@ -87,6 +95,7 @@ def main():
     print("  python experiments/week5_transactions.py | week5_transaction_load.py | week6_concurrency.py")
     print("  python experiments/week7_fault_tolerance.py")
     print("  python experiments/week8_system_models.py")
+    print("  python experiments/week9_transparency.py | week10_naming_processes.py")
     print("For container deployment, use: docker compose up --build -d")
     print("\nPress CTRL+C to terminate.")
 

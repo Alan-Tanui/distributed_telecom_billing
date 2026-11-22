@@ -1,0 +1,8 @@
+strategy,mean_ms,experiment_mean_ms,difference_ms
+broadcast,2.2115,2.2115,0.0
+central,0.0969,0.0969,0.0
+dns_cold,0.1888,0.1888,0.0
+dns_warm,0.0139,0.0139,0.0
+prefix_cold,0.4227,0.4227,0.0
+prefix_warm,0.001,0.001,0.0
+static,8.0E-4,8.0E-4,0.0

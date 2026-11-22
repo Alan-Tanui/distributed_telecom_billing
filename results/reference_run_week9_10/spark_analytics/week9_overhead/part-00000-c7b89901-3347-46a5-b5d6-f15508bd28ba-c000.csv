@@ -1,0 +1,9 @@
+variant,op,requests,mean_ms,p50_ms,p95_ms,p99_ms
+read:direct,get,6805,4.084,2.89,11.653,18.825
+read:gateway_R1,get,4843,5.758,5.325,10.125,15.275
+read:gateway_R2,get,5133,5.43,5.048,9.426,14.846
+read:gateway_R3,get,4508,6.185,5.791,10.458,15.45
+write:direct,apply,5319,5.228,2.892,17.007,24.577
+write:gateway_R1,apply,4467,6.255,5.447,13.11,19.245
+write:gateway_R2,apply,2797,9.987,8.874,19.677,26.771
+write:gateway_R3,apply,1877,14.929,13.104,30.774,40.922

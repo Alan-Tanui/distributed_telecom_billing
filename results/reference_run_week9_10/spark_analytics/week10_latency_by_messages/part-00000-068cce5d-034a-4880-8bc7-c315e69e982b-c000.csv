@@ -1,0 +1,9 @@
+strategy,messages,lookups,mean_ms
+broadcast,4,2000,2.2115
+central,1,2000,0.0969
+dns_cold,2,2000,0.1888
+dns_warm,0,1901,0.0095
+dns_warm,1,99,0.0989
+prefix_cold,1,2000,0.4227
+prefix_warm,0,2000,0.001
+static,0,2000,8.0E-4

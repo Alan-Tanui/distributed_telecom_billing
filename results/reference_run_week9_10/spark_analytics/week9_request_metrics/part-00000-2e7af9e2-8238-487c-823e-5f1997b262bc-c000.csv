@@ -1,0 +1,14 @@
+experiment,variant,requests,errors,error_pct,mean_latency_ms,p50_latency_ms,p95_latency_ms,p99_latency_ms,max_latency_ms
+failure,direct,17861,3453,19.33,4.054,3.292,9.956,15.984,58.821
+failure,transparent,9635,0,0.0,6.614,5.955,15.257,21.302,63.38
+migration,direct,13894,10453,75.23,5.013,3.952,13.047,23.146,48.061
+migration,transparent,9108,0,0.0,5.242,4.411,11.984,17.309,39.666
+overhead,read:direct,7722,0,0.0,4.113,2.893,11.752,19.386,37.504
+overhead,read:gateway_R1,5471,0,0.0,5.829,5.377,10.314,15.824,29.505
+overhead,read:gateway_R2,5851,0,0.0,5.449,5.051,9.575,14.858,26.222
+overhead,read:gateway_R3,5170,0,0.0,6.169,5.765,10.503,15.644,29.285
+overhead,write:direct,6388,0,0.0,4.976,2.727,16.442,23.871,60.643
+overhead,write:gateway_R1,4988,0,0.0,6.393,5.575,13.527,19.726,35.789
+overhead,write:gateway_R2,3251,0,0.0,9.829,8.723,19.318,26.538,59.691
+overhead,write:gateway_R3,2219,0,0.0,14.444,12.867,29.312,39.94,55.986
+replication,transparent,14639,0,0.0,8.716,6.682,21.704,32.85,66.237

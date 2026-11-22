@@ -20,6 +20,10 @@ from fault_tolerance.failure_detector import FailureDetector
 from fault_tolerance.resilient_dispatcher import ResilientDispatcher
 from processing.dispatcher import Dispatcher
 from transactions.two_phase_commit import TwoPhaseCommitCoordinator
+from common.config import NAMING_MODE
+from naming.resolvers import make_resolver
+from transparency.gateway import TransparentGateway
+from process_mgmt.process_manager import ProcessManager
 
 HOST = BIND_HOST
 PORT = NODE2_PORT
@@ -50,6 +54,8 @@ detector = FailureDetector(targets, interval=FT_PROBE_INTERVAL, timeout=FT_PROBE
                            csv_path=os.path.join(RESULTS_DIR, "week7_detector_events.csv"),
                            on_recovered=_on_node_recovered)
 resilient = ResilientDispatcher(detector)
+gateway = TransparentGateway(make_resolver(NAMING_MODE))   # Week 9: transparent access to logical resources
+pm = ProcessManager(detector)                              # Week 10: distributed process management
 
 
 def startup_recovery():
@@ -107,6 +113,46 @@ def route(request):
         return tx_coordinator.status(request["transaction_id"])
     if kind == "TX_RESYNC":
         return tx_coordinator.resync_ledger()
+    if kind == "PM_CREATE":
+        return pm.create(request["spec"], policy=request.get("policy", "least_loaded"), node=request.get("node"),
+                         parent=request.get("parent"))
+    if kind == "PM_CREATE_GROUP":
+        return pm.create_group(request["tasks"], seed=request.get("seed", 1), policy=request.get("policy", "least_loaded"),
+                               work_ms=request.get("work_ms", 2.0))
+    if kind == "PM_WAIT":
+        return pm.wait(request["proc_ids"], timeout=request.get("timeout", 120.0))
+    if kind == "PM_REDUCE":
+        return pm.reduce(request["proc_ids"])
+    if kind == "PM_LOCATE":
+        return pm.locate(request["proc_id"])
+    if kind == "PM_INFO":
+        return pm.info(request["proc_id"])
+    if kind == "PM_TERMINATE":
+        return pm.terminate(request["proc_id"], cascade=request.get("cascade", True))
+    if kind == "PM_MIGRATE":
+        return pm.migrate(request["proc_id"], request["to"])
+    if kind == "PM_TABLE":
+        return pm.table()
+    if kind == "PM_EVENTS":
+        return {"events": pm.events[-request.get("last", 200):]}
+    if kind == "PM_RESET":
+        return pm.reset()
+    if kind == "LOGICAL":
+        return gateway.invoke(request)
+    if kind == "LOGICAL_MIGRATE":
+        return gateway.migrate(request["prefix"], request["from"], request["to"])
+    if kind == "LOGICAL_REPLICAS":
+        return gateway.reconfigure(request["prefix"], request["nodes"])
+    if kind == "LOGICAL_VERIFY":
+        return gateway.verify(request["prefix"])
+    if kind == "LOGICAL_STATUS":
+        return gateway.snapshot()
+    if kind == "LOGICAL_INVALIDATE":
+        gateway.resolver.invalidate()
+        return {"ok": True}
+    if kind == "LOGICAL_MODE":     # switch the naming strategy used by the gateway at run time
+        gateway.resolver = make_resolver(request["mode"])
+        return {"ok": True, "mode": request["mode"]}
     if kind == "TX_PENDING":
         return {"pending": tx_coordinator.pending_count()}
     if kind == "TX_CONSISTENCY":

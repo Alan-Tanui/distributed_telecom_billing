@@ -56,3 +56,18 @@ FT_POLICY = os.getenv("FT_POLICY", "round_robin")  # round_robin | least_loaded
 # ---------------------------------------------------------------------------
 NODE_SERVICE_SLOTS = int(os.getenv("NODE_SERVICE_SLOTS", "1"))
 
+
+# ---------------------------------------------------------------------------
+# Weeks 9-10 — transparency, naming and process management
+# ---------------------------------------------------------------------------
+NAME_SERVERS = {   # four deployments of the same name-server code, one role each
+    "NS-CENTRAL": (os.getenv("NS_CENTRAL_HOST", "127.0.0.1"), int(os.getenv("NS_CENTRAL_PORT", "5021"))),
+    "NS-ROOT":    (os.getenv("NS_ROOT_HOST", "127.0.0.1"), int(os.getenv("NS_ROOT_PORT", "5022"))),
+    "NS-ACCT":    (os.getenv("NS_ACCT_HOST", "127.0.0.1"), int(os.getenv("NS_ACCT_PORT", "5023"))),
+    "NS-SVC":     (os.getenv("NS_SVC_HOST", "127.0.0.1"), int(os.getenv("NS_SVC_PORT", "5024"))),
+}
+NAMING_MODE = os.getenv("NAMING_MODE", "prefix")      # static | broadcast | central | dns | prefix
+NAMING_TTL_S = float(os.getenv("NAMING_TTL_S", "5"))  # cache lifetime of the dns resolver
+ACCOUNT_PREFIX_DIGITS = int(os.getenv("ACCOUNT_PREFIX_DIGITS", "3"))   # acct.C000xx -> partition acct.C000
+ACCOUNT_REPLICATION = int(os.getenv("ACCOUNT_REPLICATION", "2"))
+STATIC_MAP_PATH = os.getenv("STATIC_MAP_PATH", "data/static_map.json")

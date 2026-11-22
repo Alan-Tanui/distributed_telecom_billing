@@ -1,4 +1,0 @@
-status,transactions,mean_total_ms,p95_total_ms
-IN_DOUBT,2,60.528,75.123
-ABORT,2,146.793,217.157
-COMMIT,10122,669.064,854.654

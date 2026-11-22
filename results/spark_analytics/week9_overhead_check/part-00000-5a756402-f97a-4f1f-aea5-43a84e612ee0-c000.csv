@@ -1,0 +1,9 @@
+variant,mean_ms,experiment_mean_ms,difference_ms
+read:direct,42.697,42.697,0.0
+read:gateway_R1,57.45,57.45,0.0
+read:gateway_R2,55.822,55.822,0.0
+read:gateway_R3,69.14,69.14,0.0
+write:direct,36.473,36.473,0.0
+write:gateway_R1,47.869,47.869,0.0
+write:gateway_R2,61.52,61.52,0.0
+write:gateway_R3,83.617,83.617,0.0
